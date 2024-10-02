@@ -5,12 +5,12 @@ extends Node3D
 @export var move_speed = 5.0
 @export var look_sensitivity = 0.2
 @onready var camera_3d: Camera3D = $Camera3D
-
-
+# Mirar si tiene 1 camara solo, en process
+var camara_actual = false
 
 var velocity = Vector3()
 
-# Limitaciones para la rotación en el eje X (para evitar voltear completamente)
+# Limitaciones para el eje X de la camara
 var max_look_up_angle = deg_to_rad(-80)
 var max_look_down_angle = deg_to_rad(80)
 
@@ -22,6 +22,10 @@ func _process(delta):
 	# Mirar si esta en multi, sino no moverse
 	if not is_multiplayer_authority():
 		return
+	elif is_multiplayer_authority():
+		if not camara_actual:
+			camera_3d.make_current()
+			camara_actual = true
 		
 	# Movimiento básico (WASD)
 	var direction = Vector3()

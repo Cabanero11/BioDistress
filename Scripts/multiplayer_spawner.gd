@@ -21,6 +21,8 @@ func spawnearPlayer(data):
 	
 	listaJugadores[data] = escena
 	
+	print("Spawneado jugador con ID: ", data)
+	
 	return escena
 	
 func deletePlayer(data):

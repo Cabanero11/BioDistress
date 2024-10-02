@@ -37,9 +37,7 @@ func _on_hostear_pressed() -> void:
 	multiplayer.multiplayer_peer = compa
 	
 	multiplayer_spawner.spawn(nivel1)
-	
-	# Envía una señal a todos los clientes para que también cambien de nivel
-	rpc("pasar_al_nivel_cliente", nivel1)
+
 	
 	hostear.hide()
 	lobbies.hide()
@@ -74,6 +72,12 @@ func join_lobby(id):
 	multiplayer.multiplayer_peer = compa
 	lobby_id = id
 	
+	# Chequeo adicional para asegurar que la conexión esté bien configurada
+	if multiplayer.has_multiplayer_peer():
+		print("Conestado al peer correctamente")
+	else:
+		print("Error al conectar con el peer :(")
+
 	# Ocultar botones
 	hostear.hide()
 	lobbies.hide()
@@ -81,12 +85,14 @@ func join_lobby(id):
 	
 	print("Me uno al lobby con ID:", id)
 	
-	# Comprobar que tienes el peer configurado y que tienes autoridad
-	if multiplayer.has_multiplayer_peer() and multiplayer.is_multiplayer_authority():
+	# Comprobar que peer eres
+	if multiplayer.is_server():
+		print("Host: Conectado y cambiando de nivel con ID:", id)
 		multiplayer_spawner.spawn(nivel1)
-		print("Conectado y cambiando de nivel con ID:", id)
+		# Envía una señal a todos los clientes para que también cambien de nivel
+		rpc("pasar_al_nivel_cliente", nivel1)
 	else:
-		print("Error: No tienes autoridad o el peer no está configurado")
+		print("Cliente: Espero al host")
 	
 	
 # Listar lobbys abiertas publicas
@@ -109,8 +115,9 @@ func _on_listar_lobbys(lista_lobbies):
 		
 		lobbies.add_child(boton_lobby)
 	
-	
-	
+# Remotely Callable 
+# para que el cliente se conecte a la vez que el host al nivel
+@rpc
 func pasar_al_nivel_cliente(data):
 	var instanscia_nivel = (load(data) as PackedScene).instantiate()
 	get_tree().root.add_child(instanscia_nivel)

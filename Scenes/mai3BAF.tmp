@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://be70mavlejhp7"]
+
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_d8n61"]
+[ext_resource type="Script" path="res://Scripts/steam.gd" id="1_eckvm"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_d8n61")
+
+[node name="Steam" type="Node" parent="."]
+script = ExtResource("1_eckvm")
+
+[node name="Hostear" type="Button" parent="."]
+offset_left = 513.0
+offset_top = 440.0
+offset_right = 655.0
+offset_bottom = 487.0
+text = "Hostear"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="Hostear" to="." method="_on_hostear_pressed"]

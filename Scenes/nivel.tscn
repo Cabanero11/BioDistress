@@ -1,38 +1,67 @@
-[gd_scene load_steps=4 format=3 uid="uid://8x62njxshjjr"]
+[gd_scene load_steps=6 format=3 uid="uid://8x62njxshjjr"]
 
 [ext_resource type="Script" path="res://Scripts/multiplayer_spawner.gd" id="1_b8i43"]
+[ext_resource type="Script" path="res://Scripts/nivel.gd" id="1_oyjf3"]
 [ext_resource type="PackedScene" uid="uid://bc6182g313ep7" path="res://Scenes/player.tscn" id="2_ljwkk"]
+[ext_resource type="PackedScene" uid="uid://cppt37b1va62d" path="res://Scenes/steam.tscn" id="4_bvftf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_unqw4"]
 
 [node name="Nivel" type="Node"]
+script = ExtResource("1_oyjf3")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath(".")
 script = ExtResource("1_b8i43")
 playerScene = ExtResource("2_ljwkk")
 
-[node name="Player" parent="." instance=ExtResource("2_ljwkk")]
-
-[node name="Suelo" type="MeshInstance3D" parent="."]
-transform = Transform3D(17.8255, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, -0.0173063, -1.28527, -0.00957678)
-mesh = SubResource("BoxMesh_unqw4")
-
-[node name="Suelo2" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.61401, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, 10.1626, 0.157051, -0.00957678)
-mesh = SubResource("BoxMesh_unqw4")
-
-[node name="Suelo3" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.61401, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, -10.0005, 0.157051, -0.00957678)
-mesh = SubResource("BoxMesh_unqw4")
-
-[node name="Suelo4" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1.11509e-07, 0, 22.6943, 0, 2.20882, 0, -2.55104, 0, -9.91998e-07, 0.0121807, 0.157051, 10.3894)
-mesh = SubResource("BoxMesh_unqw4")
-
-[node name="Suelo5" type="MeshInstance3D" parent="."]
-transform = Transform3D(-1.11509e-07, 0, 22.6943, 0, 2.20882, 0, -2.55104, 0, -9.91998e-07, 0.0121807, 0.157051, -10.2599)
-mesh = SubResource("BoxMesh_unqw4")
+[node name="Steam" parent="." instance=ExtResource("4_bvftf")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.492803, 0.870141, 0, -0.870141, 0.492803, 0, 7.62538, 0)
+
+[node name="Suelos" type="Node" parent="."]
+
+[node name="Suelo" type="MeshInstance3D" parent="Suelos"]
+transform = Transform3D(17.8255, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, -0.0173063, -1.28527, -0.00957678)
+mesh = SubResource("BoxMesh_unqw4")
+skeleton = NodePath("../..")
+
+[node name="Suelo2" type="MeshInstance3D" parent="Suelos"]
+transform = Transform3D(2.61401, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, 10.1626, 0.157051, -0.00957678)
+mesh = SubResource("BoxMesh_unqw4")
+skeleton = NodePath("../..")
+
+[node name="Suelo3" type="MeshInstance3D" parent="Suelos"]
+transform = Transform3D(2.61401, 0, 0, 0, 2.20882, 0, 0, 0, 18.8509, -10.0005, 0.157051, -0.00957678)
+mesh = SubResource("BoxMesh_unqw4")
+skeleton = NodePath("../..")
+
+[node name="Suelo4" type="MeshInstance3D" parent="Suelos"]
+transform = Transform3D(-1.11509e-07, 0, 22.6943, 0, 2.20882, 0, -2.55104, 0, -9.91998e-07, 0.0121807, 0.157051, 10.3894)
+mesh = SubResource("BoxMesh_unqw4")
+skeleton = NodePath("../..")
+
+[node name="Suelo5" type="MeshInstance3D" parent="Suelos"]
+transform = Transform3D(-1.11509e-07, 0, 22.6943, 0, 2.20882, 0, -2.55104, 0, -9.91998e-07, 0.0121807, 0.157051, -10.2599)
+mesh = SubResource("BoxMesh_unqw4")
+skeleton = NodePath("../..")
+
+[node name="Player" parent="." instance=ExtResource("2_ljwkk")]
+
+[node name="ChatBox" type="TextEdit" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -74.0
+offset_right = 357.0
+grow_vertical = 0
+
+[node name="ChatInput" type="LineEdit" parent="ChatBox"]
+layout_mode = 0
+offset_top = 42.0
+offset_right = 357.0
+offset_bottom = 73.0
+
+[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+[connection signal="text_submitted" from="ChatBox/ChatInput" to="." method="_on_chat_input_text_submitted"]

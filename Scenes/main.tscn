@@ -1,13 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://be70mavlejhp7"]
+[gd_scene load_steps=4 format=3 uid="uid://be70mavlejhp7"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_d8n61"]
-[ext_resource type="Script" path="res://Scripts/steam.gd" id="1_eckvm"]
+[ext_resource type="PackedScene" uid="uid://cppt37b1va62d" path="res://Scenes/steam.tscn" id="2_scrtu"]
+
+[sub_resource type="GDScript" id="GDScript_rgmdw"]
+script/source = "extends CheckBox
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass"
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_d8n61")
 
-[node name="Steam" type="Node" parent="."]
-script = ExtResource("1_eckvm")
+[node name="Steam" parent="." instance=ExtResource("2_scrtu")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")
@@ -22,11 +34,37 @@ offset_bottom = 415.0
 layout_mode = 2
 
 [node name="Hostear" type="Button" parent="."]
-offset_left = 513.0
-offset_top = 440.0
-offset_right = 655.0
-offset_bottom = 487.0
+offset_left = 602.0
+offset_top = 438.0
+offset_right = 744.0
+offset_bottom = 485.0
 text = "Hostear"
+
+[node name="ContraseñaLobby" type="LineEdit" parent="Hostear"]
+layout_mode = 0
+offset_left = 133.0
+offset_top = 90.0
+offset_right = 203.0
+offset_bottom = 125.0
+scale = Vector2(1.389, 1)
+
+[node name="Contraseña" type="TextEdit" parent="Hostear"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 88.0
+offset_right = 118.0
+offset_bottom = 127.0
+text = "Contraseña:"
+editable = false
+
+[node name="ActivarContraseña" type="CheckBox" parent="Hostear"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 57.0
+offset_right = 127.0
+offset_bottom = 88.0
+text = "Contraseña?"
+script = SubResource("GDScript_rgmdw")
 
 [node name="RefrescarLista" type="Button" parent="."]
 offset_left = 308.0
@@ -36,4 +74,5 @@ offset_bottom = 487.0
 text = "Refrescar lista"
 
 [connection signal="pressed" from="Hostear" to="." method="_on_hostear_pressed"]
+[connection signal="toggled" from="Hostear/ActivarContraseña" to="." method="_on_activar_contraseña_toggled"]
 [connection signal="pressed" from="RefrescarLista" to="." method="_on_refrescar_lista_pressed"]

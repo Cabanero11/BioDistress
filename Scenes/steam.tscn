@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cppt37b1va62d"]
+
+[ext_resource type="Script" path="res://Scripts/steam.gd" id="1_n4i8d"]
+
+[node name="Steam" type="Node"]
+script = ExtResource("1_n4i8d")

@@ -6,7 +6,7 @@ Videojogo con panas, en Godot 4
 Custom engine para steam multiplayer con Godot
 
 ```
-  https://github.com/GodotSteam/GodotSteam/releases/download/v4.5.1-mp/win64-g421-s158-gs451-mp.zip
+  https://github.com/GodotSteam/GodotSteam/releases/download/v4.11/win64-g43-s160-gs411.zip
 ```
 
 Descargar, descomprimir y ejecutar 

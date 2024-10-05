@@ -7,17 +7,25 @@ extends Node
 var chat_visible = false
 
 func _ready() -> void:
-	pass
+	chat_box.hide()
+	chat_input.hide()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# Si se presiona la tecla T o Enter
-	if Input.is_action_just_pressed("text_ui_toggle"): 
+	if Input.is_action_just_pressed("text_ui_toggle") and not chat_input.has_focus(): 
 		togglear_chat()
 
+	# Si se presiona Enter (ui_accept) mientras el input tiene foco, enviar el mensaje
+	if Input.is_action_just_pressed("ui_accept") and chat_input.has_focus():
+		_on_chat_input_text_submitted(chat_input.text)
 
 # Cuando pulsa ENTER
 func _on_chat_input_text_submitted(new_text: String) -> void:
+	# No vacio pls
+	if new_text.strip_edges() == "":
+		return
+	
 	# Poner en el chat Nombre: msg
 	chat_box.text += str("[" + Steam.getPersonaName() + "]" + ": " + new_text + "\n")
 	
@@ -27,8 +35,12 @@ func _on_chat_input_text_submitted(new_text: String) -> void:
 	# no msg tras mandar :8
 	chat_input.clear()
 	
-	# Ocultar el chat después de 5 segundos
-	await get_tree().create_timer(5.0).timeout
+	esperar_y_toglear_chat()
+	
+	
+# Eso
+func esperar_y_toglear_chat():
+	await get_tree().create_timer(3.0).timeout
 	togglear_chat()
 
 # Función remota para recibir mensajes de otros jugadores
@@ -52,3 +64,4 @@ func togglear_chat():
 	else:
 		chat_box.hide()
 		chat_input.hide()
+		chat_input.release_focus()

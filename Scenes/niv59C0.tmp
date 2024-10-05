@@ -56,7 +56,6 @@ anchor_bottom = 1.0
 offset_top = -169.0
 offset_right = 357.0
 grow_vertical = 0
-editable = false
 
 [node name="ChatInput" type="LineEdit" parent="ChatBox"]
 layout_mode = 0
@@ -64,6 +63,7 @@ offset_top = 136.0
 offset_right = 357.0
 offset_bottom = 167.0
 placeholder_text = "/ to write..."
+editable = false
 
 [connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
 [connection signal="text_submitted" from="ChatBox/ChatInput" to="." method="_on_chat_input_text_submitted"]

@@ -58,44 +58,42 @@ func _on_hostear_pressed() -> void:
 	lobbies.hide()
 	refrescar_lista.hide()
 	
-# Unirse pal lobyy	
+# Unirse pal lobyy
 func join_lobby(id, contrasena_lobby_lista):
-	var password_lobby = Steam.getLobbyData(id, "password")
-	
-	# Recoger la contraseña que ponga el pibe/a
+	# 
+	var password_lobby = Steam.getLobbyData(id, "password") or "" 
 	var password = contrasena_lobby_lista.text
 
+	# Imprime las contraseñas para debugging
+	print("Password lobby: " + password_lobby)
+	print("Password usuario: " + password)
+
 	if password_lobby == password:
-		# Pal lobby te vas
+		# Si las contraseñas coinciden
 		compa.connect_lobby(id)
 		multiplayer.multiplayer_peer = compa
 		lobby_id = id
 	
-		# Chequeo adicional para asegurar que la conexión esté bien configurada
 		if multiplayer.has_multiplayer_peer():
-			print("Conestado al peer correctamente")
+			print("Conectado al peer correctamente")
 		else:
 			print("Error al conectar con el peer :(")
 
-		# Ocultar botones
+		# Ocultar botones al unirse
 		hostear.hide()
 		lobbies.hide()
 		refrescar_lista.hide()
 		
 		print("Me uno al lobby con ID:", id)
 		
-		# Comprobar que peer eres
 		if multiplayer.is_server():
 			print("Host: Conectado y cambiando de nivel con ID:", id)
 			multiplayer_spawner.spawn(nivel1)
-			# Envía una señal a todos los clientes para que también cambien de nivel
 			rpc("pasar_al_nivel_cliente", nivel1)
 		else:
 			print("Cliente: Espero al host")
-	
 	else:
-		print("Contrasena incorrecta bro")
-	
+		print("Contraseña incorrecta bro")	
 	
 	
 	

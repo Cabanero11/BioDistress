@@ -15,17 +15,21 @@ var max_look_up_angle = deg_to_rad(-80)
 var max_look_down_angle = deg_to_rad(80)
 
 func _ready() -> void:
+	# Host
 	if is_multiplayer_authority():
+		camera_3d.make_current()
+	# Usuarios
+	else:
+		camara_actual = true
 		camera_3d.make_current()
 
 func _process(delta):
 	# Mirar si esta en multi, sino no moverse
 	if not is_multiplayer_authority():
-		return
-	elif is_multiplayer_authority():
 		if not camara_actual:
 			camera_3d.make_current()
 			camara_actual = true
+		return
 		
 	# Movimiento básico (WASD)
 	var direction = Vector3()

@@ -8,11 +8,13 @@
 
 [node name="PlayerToni" type="Node"]
 script = ExtResource("1_5fg58")
+move_speed = null
+look_sensitivity = null
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0193236, 0, 0.999735)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.208952, 0.485127, -0.347656)
 shape = SubResource("SphereShape3D_3gr8b")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
